@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>For My Bubu ❤️</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+  <meta name="description" content="A sweet interactive love note with 3D gift box and floating hearts.">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg'><text y='50%' x='50%' dominant-baseline='middle' text-anchor='middle' font-size='40'>🎁</text></svg>">
+  <style>
+    :root{--pink:#ffd1dc;--lavender:#c5b9ff;--white:#ffffff;--shadow:rgba(0,0,0,.15);}
+    *{box-sizing:border-box;margin:0;padding:0;}
+    body{
+      height:100vh;
+      background:linear-gradient(135deg,var(--pink),var(--lavender));
+      display:flex;align-items:center;justify-content:center;
+      font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+      overflow:hidden;
+      perspective:1200px;
+    }
+    .heart{
+      position:absolute;color:var(--white);font-size:2rem;
+      animation:float 7s linear infinite;
+    }
+    @keyframes float{
+      0%{transform:translateY(100vh) scale(1);opacity:1;}
+      100%{transform:translateY(-10vh) scale(1.5);opacity:0;}
+    }
+    .heart:nth-child(1){left:10%;animation-duration:8s;}
+    .heart:nth-child(2){left:30%;animation-duration:9s;animation-delay:2s;}
+    .heart:nth-child(3){left:50%;animation-duration:6s;animation-delay:4s;}
+    .heart:nth-child(4){left:70%;animation-duration:7.5s;animation-delay:1s;}
+    .heart:nth-child(5){left:90%;animation-duration:8.5s;animation-delay:3s;}
+    .scene{width:220px;height:220px;cursor:pointer;}
+    .box{
+      width:100%;height:100%;position:relative;
+      transform-style:preserve-3d;
+      transition:transform .8s cubic-bezier(.68,-.55,.27,1.55);
+    }
+    .scene.open .box{transform:rotateX(-110deg);}
+    .face{
+      position:absolute;width:100%;height:100%;
+      background:var(--white);border:2px solid var(--lavender);
+      box-shadow:inset 0 0 15px var(--shadow);
+      display:flex;align-items:center;justify-content:center;
+      font-size:2.5rem;color:var(--lavender);
+    }
+    .front{transform:translateZ(110px);}
+    .back{transform:rotateY(180deg) translateZ(110px);}
+    .left{transform:rotateY(-90deg) translateZ(110px);}
+    .right{transform:rotateY(90deg) translateZ(110px);}
+    .top{transform:rotateX(90deg) translateZ(110px);background:var(--lavender);}
+    .bottom{transform:rotateX(-90deg) translateZ(110px);}
+    .msg{
+      position:absolute;top:50%;left:50%;
+      transform:translate(-50%,-50%);
+      background:var(--white);border-radius:15px;
+      padding:1.5rem 1.8rem;width:80vw;max-width:400px;
+      text-align:center;box-shadow:0 10px 30px var(--shadow);
+      opacity:0;pointer-events:none;
+      transition:opacity .6s .4s;
+    }
+    .scene.open + .msg{opacity:1;pointer-events:auto;}
+    h2{font-size:1.4rem;color:#444;margin-bottom:.6rem;}
+    #quote{font-size:1.25rem;color:#666;line-height:1.5;}
+    @media (max-width: 500px) {
+      .scene{width:140px;height:140px;}
+      .msg{padding:1rem 1.2rem;}
+    }
+  </style>
+</head>
+<body>
+  <div class="heart" aria-hidden="true">❤️</div>
+  <div class="heart" aria-hidden="true">💖</div>
+  <div class="heart" aria-hidden="true">💕</div>
+  <div class="heart" aria-hidden="true">💗</div>
+  <div class="heart" aria-hidden="true">💝</div>
+
+  <div class="scene" id="scene" tabindex="0" aria-label="Click or press Enter to open the gift box">
+    <div class="box" aria-hidden="true">
+      <div class="face front">🎁</div>
+      <div class="face back">🎁</div>
+      <div class="face left">🎁</div>
+      <div class="face right">🎁</div>
+      <div class="face top">🎀</div>
+      <div class="face bottom"></div>
+    </div>
+  </div>
+
+  <div class="msg" role="dialog" aria-modal="true" aria-label="Love Message">
+    <h2>For My Bubu 💑</h2>
+    <p id="quote">Every moment with you is my favorite page in our story.</p>
+  </div>
+
+  <script>
+    const lines = [
+      "Every moment with you is my favorite page in our story.",
+      "You’re the calm to my chaos and the smile to my silence.",
+      "Distance is just a test to see how far love can travel.",
+      "I never knew what ‘home’ felt like until I met you.",
+      "You make ordinary days feel like celebrations.",
+      "Falling for you wasn’t falling at all—it was flying.",
+      "You’re the plot twist that made my life worth reading.",
+      "I miss you, Bubu—when will you be here?"
+    ];
+    let i = 0;
+    const quoteEl = document.getElementById('quote');
+    const scene = document.getElementById('scene');
+
+    // Open box on click/touch/keyboard
+    function openBox() { scene.classList.add('open'); }
+    scene.addEventListener('click', openBox);
+    scene.addEventListener('keydown', (e) => {
+      if(e.key === 'Enter' || e.key === ' ') openBox();
+    });
+
+    // Rotate quote every 5 s after opening
+    setInterval(() => {
+      if (scene.classList.contains('open')) {
+        i = (i + 1) % lines.length;
+        quoteEl.style.opacity = 0;
+        setTimeout(() => {
+          quoteEl.textContent = lines[i];
+          quoteEl.style.opacity = 1;
+        }, 300);
+      }
+    }, 5000);
+  </script>
+</body>
+</html>

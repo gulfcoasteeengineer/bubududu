@@ -2,98 +2,60 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>For My Bubu ❤️</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
-  <meta name="description" content="A sweet interactive love note with 3D gift box and floating hearts.">
-  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg'><text y='50%' x='50%' dominant-baseline='middle' text-anchor='middle' font-size='40'>🎁</text></svg>">
+  <title>Bubu Surprise 💖</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=no">
+  <meta name="description" content="A tiny colourful love-note for my Bubu">
   <style>
-    :root{--pink:#ffd1dc;--lavender:#c5b9ff;--white:#ffffff;--shadow:rgba(0,0,0,.15);}
-    *{box-sizing:border-box;margin:0;padding:0;}
+    :root{
+      --pink:#ff9a9e;--orange:#fad0c4;--purple:#a18cd1;--blue:#fbc2eb;
+      --glass:rgba(255,255,255,.25);--blur:blur(20px);
+    }
+    *{box-sizing:border-box;margin:0;padding:0;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif}
     body{
-      height:100vh;
-      background:linear-gradient(135deg,var(--pink),var(--lavender));
-      display:flex;align-items:center;justify-content:center;
-      font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+      height:100vh;display:flex;align-items:center;justify-content:center;
+      background:linear-gradient(45deg,var(--pink),var(--orange),var(--purple),var(--blue));
+      background-size:400% 400%;
+      animation:bgShift 12s ease infinite;
       overflow:hidden;
-      perspective:1200px;
     }
-    .heart{
-      position:absolute;color:var(--white);font-size:2rem;
-      animation:float 7s linear infinite;
+    @keyframes bgShift{
+      0%{background-position:0% 50%}
+      50%{background-position:100% 50%}
+      100%{background-position:0% 50%}
     }
-    @keyframes float{
-      0%{transform:translateY(100vh) scale(1);opacity:1;}
-      100%{transform:translateY(-10vh) scale(1.5);opacity:0;}
+    .card{
+      width:90vw;max-width:380px;
+      background:var(--glass);backdrop-filter:var(--blur);
+      border:1px solid rgba(255,255,255,.3);
+      border-radius:28px;padding:2.5rem 1.8rem;
+      text-align:center;color:#fff;
+      box-shadow:0 8px 32px rgba(0,0,0,.1);
     }
-    .heart:nth-child(1){left:10%;animation-duration:8s;}
-    .heart:nth-child(2){left:30%;animation-duration:9s;animation-delay:2s;}
-    .heart:nth-child(3){left:50%;animation-duration:6s;animation-delay:4s;}
-    .heart:nth-child(4){left:70%;animation-duration:7.5s;animation-delay:1s;}
-    .heart:nth-child(5){left:90%;animation-duration:8.5s;animation-delay:3s;}
-    .scene{width:220px;height:220px;cursor:pointer;}
-    .box{
-      width:100%;height:100%;position:relative;
-      transform-style:preserve-3d;
-      transition:transform .8s cubic-bezier(.68,-.55,.27,1.55);
+    h1{font-size:clamp(1.6rem,5vw,2.2rem);margin-bottom:.8rem}
+    #quote{font-size:clamp(1rem,4vw,1.4rem);min-height:3em;line-height:1.5}
+    .heart-btn{
+      margin:1.2rem auto 0;width:90px;height:90px;
+      background:var(--glass);border:1px solid rgba(255,255,255,.4);
+      border-radius:50%;display:grid;place-items:center;
+      font-size:2.8rem;cursor:pointer;transition:transform .3s;
+      box-shadow:0 4px 20px rgba(0,0,0,.15);
     }
-    .scene.open .box{transform:rotateX(-110deg);}
-    .face{
-      position:absolute;width:100%;height:100%;
-      background:var(--white);border:2px solid var(--lavender);
-      box-shadow:inset 0 0 15px var(--shadow);
-      display:flex;align-items:center;justify-content:center;
-      font-size:2.5rem;color:var(--lavender);
-    }
-    .front{transform:translateZ(110px);}
-    .back{transform:rotateY(180deg) translateZ(110px);}
-    .left{transform:rotateY(-90deg) translateZ(110px);}
-    .right{transform:rotateY(90deg) translateZ(110px);}
-    .top{transform:rotateX(90deg) translateZ(110px);background:var(--lavender);}
-    .bottom{transform:rotateX(-90deg) translateZ(110px);}
-    .msg{
-      position:absolute;top:50%;left:50%;
-      transform:translate(-50%,-50%);
-      background:var(--white);border-radius:15px;
-      padding:1.5rem 1.8rem;width:80vw;max-width:400px;
-      text-align:center;box-shadow:0 10px 30px var(--shadow);
-      opacity:0;pointer-events:none;
-      transition:opacity .6s .4s;
-    }
-    .scene.open + .msg{opacity:1;pointer-events:auto;}
-    h2{font-size:1.4rem;color:#444;margin-bottom:.6rem;}
-    #quote{font-size:1.25rem;color:#666;line-height:1.5;}
-    @media (max-width: 500px) {
-      .scene{width:140px;height:140px;}
-      .msg{padding:1rem 1.2rem;}
-    }
+    .heart-btn:active{transform:scale(.92)}
+    /* confetti canvas */
+    #confetti{position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:10}
   </style>
 </head>
 <body>
-  <div class="heart" aria-hidden="true">❤️</div>
-  <div class="heart" aria-hidden="true">💖</div>
-  <div class="heart" aria-hidden="true">💕</div>
-  <div class="heart" aria-hidden="true">💗</div>
-  <div class="heart" aria-hidden="true">💝</div>
-
-  <div class="scene" id="scene" tabindex="0" aria-label="Click or press Enter to open the gift box">
-    <div class="box" aria-hidden="true">
-      <div class="face front">🎁</div>
-      <div class="face back">🎁</div>
-      <div class="face left">🎁</div>
-      <div class="face right">🎁</div>
-      <div class="face top">🎀</div>
-      <div class="face bottom"></div>
-    </div>
-  </div>
-
-  <div class="msg" role="dialog" aria-modal="true" aria-label="Love Message">
-    <h2>For My Bubu 💑</h2>
-    <p id="quote">Every moment with you is my favorite page in our story.</p>
+  <canvas id="confetti" aria-hidden="true"></canvas>
+  <div class="card">
+    <h1>For My Bubu 💑</h1>
+    <p id="quote">Tap the heart for a surprise</p>
+    <div class="heart-btn" id="heartBtn" aria-label="Reveal love message">💝</div>
   </div>
 
   <script>
-    const lines = [
-      "Every moment with you is my favorite page in our story.",
+    const quotes = [
+      "Every moment with you is my favourite page in our story.",
       "You’re the calm to my chaos and the smile to my silence.",
       "Distance is just a test to see how far love can travel.",
       "I never knew what ‘home’ felt like until I met you.",
@@ -102,28 +64,62 @@
       "You’re the plot twist that made my life worth reading.",
       "I miss you, Bubu—when will you be here?"
     ];
-    let i = 0;
+    let qi = 0;
     const quoteEl = document.getElementById('quote');
-    const scene = document.getElementById('scene');
+    const heartBtn = document.getElementById('heartBtn');
 
-    // Open box on click/touch/keyboard
-    function openBox() { scene.classList.add('open'); }
-    scene.addEventListener('click', openBox);
-    scene.addEventListener('keydown', (e) => {
-      if(e.key === 'Enter' || e.key === ' ') openBox();
-    });
-
-    // Rotate quote every 5 s after opening
-    setInterval(() => {
-      if (scene.classList.contains('open')) {
-        i = (i + 1) % lines.length;
-        quoteEl.style.opacity = 0;
-        setTimeout(() => {
-          quoteEl.textContent = lines[i];
-          quoteEl.style.opacity = 1;
-        }, 300);
+    /* --- simple confetti --- */
+    const canvas = document.getElementById('confetti');
+    const ctx = canvas.getContext('2d');
+    let pieces = [], animating = false;
+    function resize(){canvas.width=innerWidth;canvas.height=innerHeight;}
+    addEventListener('resize',resize);resize();
+    function create(){
+      pieces = [];
+      for(let i=0;i<120;i++){
+        pieces.push({
+          x:Math.random()*canvas.width,
+          y:Math.random()*canvas.height-canvas.height,
+          r:Math.random()*4+2,
+          d:Math.random()*8+4,
+          c:`hsl(${Math.random()*360},100%,70%)`,
+          tilt:Math.random()*10,
+          tiltAngle:Math.random()*Math.PI
+        });
       }
-    }, 5000);
+    }
+    function draw(){
+      ctx.clearRect(0,0,canvas.width,canvas.height);
+      let allGone=true;
+      pieces.forEach(p=>{
+        if(p.y<canvas.height+10){
+          allGone=false;
+          ctx.beginPath();
+          ctx.arc(p.x,p.y,p.r,0,Math.PI*2);
+          ctx.fillStyle=p.c;
+          ctx.fill();
+          p.y+=p.d;
+          p.tiltAngle+=.02;
+          p.x+=Math.sin(p.tiltAngle)*2;
+        }
+      });
+      if(!allGone && animating) requestAnimationFrame(draw);
+      else animating=false;
+    }
+    function burst(){
+      create();animating=true;draw();
+    }
+
+    /* --- reveal --- */
+    heartBtn.addEventListener('click',()=>{
+      qi = (qi+1)%quotes.length;
+      quoteEl.style.opacity=0;
+      setTimeout(()=>{
+        quoteEl.textContent=quotes[qi];
+        quoteEl.style.opacity=1;
+      },200);
+      burst();
+    });
   </script>
 </body>
 </html>
